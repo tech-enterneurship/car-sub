@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:insert="fragments/general.html :: bootstrapcss">
+    <link th:insert="fragments/general.html :: bootstrapjs">
+    <title>Изменение СТО</title>
+</head>
+<body>
+<header th:insert="fragments/general.html :: header"></header>
+<div class="container">
+    <div class="row">
+        <div class="col-4 offset-4">
+            <form th:action="@{/car/{id}(id=${car.getId()})}" th:method="POST" th:object="${car}" class="mt-5">
+                <div class="form-group my-2">
+                    <label for="name" class="fs-5 my-2">Номер</label>
+                    <input type="text" class="form-control" id="name" th:field="*{number}">
+                </div>
+                <div class="form-group my-2">
+                    <label for="year" class="fs-5 my-2">Год</label>
+                    <input type="number" class="form-control" id="year" th:field="*{year}">
+                </div>
+                <div class="form-group my-2">
+                    <label for="model" class="fs-5 my-2">Модель машины</label>
+                    <select class="form-control" id="model" th:field="*{carModel}">
+                        <option th:value="${model.getId()}" th:each="model: ${car_models}" th:text="${model.getName()}"></option>
+                    </select>
+                </div>
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <center><button type="submit" class="btn btn-primary">Изменить</button></center>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

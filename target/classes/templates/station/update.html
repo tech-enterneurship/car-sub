@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link th:insert="fragments/general.html :: bootstrapcss">
+    <link th:insert="fragments/general.html :: bootstrapjs">
+    <title>Электив беті</title>
+</head>
+<body>
+<header th:insert="fragments/general.html :: header"></header>
+<div class="container">
+    <div class="row">
+        <div class="col-6 offset-3">
+            <form th:action="@{/station/{id}(id=${station.getId()})}" th:method="POST" th:object="${station}" class="mt-5">
+                <div class="form-group my-2">
+                    <label for="name" class="fs-5 my-2">Название</label>
+                    <input type="text" class="form-control" id="name" th:field="*{name}">
+                </div>
+                <div class="form-group my-2">
+                    <label for="location" class="fs-5 my-2">Адресс</label>
+                    <input type="text" class="form-control" id="location" th:field="*{location}">
+                </div>
+                <div class="form-group my-2">
+                    <label for="services" class="fs-5 my-2">Сервисы</label>
+                    <select multiple class="form-control" id="services" th:field="*{station_services}">
+                        <option th:value="${service.getId()}" th:each="service: ${services}" th:text="${service.getName() + ' - ' + service.getPrice()}"></option>
+                    </select>
+                </div>
+                <div class="form-group my-2">
+                    <label for="car_models" class="fs-5 my-2">Модели машин</label>
+                    <select multiple class="form-control" id="car_models" th:field="*{station_car_models}">
+                        <option th:value="${car_model.getId()}" th:each="car_model: ${car_models}" th:text="${car_model.getName()}"></option>
+                    </select>
+                </div>
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <center><button type="submit" class="btn btn-primary">Изменить</button></center>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Элективтер | Басты беті</title>
+    <link th:insert="fragments/general.html :: bootstrapcss">
+    <link th:insert="fragments/general.html :: bootstrapjs">
+</head>
+<body>
+<header th:insert="fragments/general.html :: header"></header>
+<div class="container">
+    <table class="table" >
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Название</th>
+            <th scope="col">Адресс</th>
+            <th sec:authorize="hasRole('ROLE_DRIVER')" scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="station, i: ${stations}" th:if="${(driver != null and driver.getCar() != null and station.getStation_car_models().contains(driver.getCar().getCarModel()) == true) or (driver == null)}">
+            <th th:text="${i.index + 1}" scope="row"></th>
+            <td><a th:href="@{/station/profile/{id}(id=${station.getId()})}" th:text="${station.getName()}"></a></td>
+            <td th:text="${station.getLocation()}"></td>
+            <td sec:authorize="hasRole('ROLE_DRIVER')"><a th:href="@{/driver/subscribe/{id}(id=${station.getId()})}" class="btn btn-outline-danger">Подписаться</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

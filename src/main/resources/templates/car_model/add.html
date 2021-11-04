@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:insert="fragments/general.html :: bootstrapcss">
+    <link th:insert="fragments/general.html :: bootstrapjs">
+    <meta charset="UTF-8">
+    <title>Добавление моделя машины</title>
+</head>
+<body>
+<header th:insert="fragments/general.html :: header"></header>
+<div class="container">
+    <div class="row">
+        <div class="col-4 offset-4">
+            <form th:action="@{/model/add}" th:method="POST" th:object="${car_model}" class="mt-5">
+                <div class="form-group my-2">
+                    <label for="model_name" class="fs-5 my-2">Модель</label>
+                    <input type="text" class="form-control" id="model_name" th:field="*{name}">
+                </div>
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <center><button type="submit" class="btn btn-primary">Добавить</button></center>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

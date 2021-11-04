@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:insert="fragments/general.html :: bootstrapcss">
+    <link th:insert="fragments/general.html :: bootstrapjs">
+    <link rel="stylesheet" href="/styles.css">
+    <title>Профиль</title>
+</head>
+<body>
+<header th:insert="fragments/general.html :: header"></header>
+<div class="container">
+    <div class="row">
+        <div class="col p-4">
+            <div class="d-flex justify-content-around">
+                <a th:if="${my_car == null}" th:href="@{/car/add}" class="btn btn-outline-primary">Добавление машины</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form th:if="${my_car != null}" th:action="@{/car/{id}(id=${my_car.getId()})}" th:method="POST" th:object="${my_car}">
+                <div class="form-group my-2">
+                    <label for="name" class="fs-5 my-2">Номер</label>
+                    <input type="text" class="form-control" id="name" th:field="*{number}">
+                </div>
+                <div class="form-group my-2">
+                    <label for="car_model" class="fs-5 my-2">Модель</label>
+                    <select class="form-control" id="car_model" th:field="*{carModel}">
+                        <option th:value="${car_model.getId()}" th:each="car_model: ${car_models}" th:text="${car_model.getName()}"></option>
+                    </select>
+                </div>
+                <div class="form-group my-2">
+                    <label for="year" class="fs-5 my-2">Год</label>
+                    <input type="number" class="form-control" id="year" th:field="*{year}">
+                </div>
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <center><button type="submit" class="btn btn-primary">Изменить</button></center>
+            </form>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body" th:if="${my_station != null}" th:object="${my_station}">
+                    <a th:href="@{/station/profile/{id}(id=${my_station.getId()})}" th:text="${my_station.name}" class="card-title h5"></a>
+                    <p th:if="${appointment_day != null}" th:text="${appointment_day + ' числа каждого месяца'}" class="card-text"></p>
+                    <form th:if="${appointment_day == null}" th:action="@{/driver/appointment}" th:method="POST">
+                        <div class="form-group my-2">
+                            <label for="day" class="fs-5 my-2">День</label>
+                            <select class="form-control" id="day" name="day">
+                                <option th:each="i: ${#numbers.sequence(1, 28)}" th:value="${i}" th:text="${i}"></option>
+                            </select>
+                        </div>
+                        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                        <center><button type="submit" class="btn btn-success">Назначить</button></center>
+                    </form>
+                    <a th:href="@{/driver/unsubscribe/{id}(id=${my_station.getId()})}" class="btn btn-danger">Отписаться</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

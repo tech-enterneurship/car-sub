@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:insert="fragments/general.html :: bootstrapcss">
+    <link th:insert="fragments/general.html :: bootstrapjs">
+    <meta charset="UTF-8">
+    <title>Добавление сервиса</title>
+</head>
+<body>
+<header th:insert="fragments/general.html :: header"></header>
+<div class="container">
+    <div class="row">
+        <div class="col-4 offset-4">
+            <form th:action="@{/service/add}" th:method="POST" th:object="${service}" class="mt-5">
+                <div class="form-group my-2">
+                    <label for="name" class="fs-5 my-2">Название</label>
+                    <input type="text" class="form-control" id="name" th:field="*{name}">
+                </div>
+                <div class="form-group my-2">
+                    <label for="price" class="fs-5 my-2">Цена</label>
+                    <input type="number" class="form-control" id="price" th:field="*{price}">
+                </div>
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <center><button type="submit" class="btn btn-primary">Добавить</button></center>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

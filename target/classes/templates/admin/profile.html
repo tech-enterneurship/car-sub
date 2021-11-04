@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:insert="fragments/general.html :: bootstrapcss">
+    <link th:insert="fragments/general.html :: bootstrapjs">
+    <link rel="stylesheet" href="/styles.css">
+    <title>Профиль</title>
+</head>
+<body>
+<header th:insert="fragments/general.html :: header"></header>
+<div class="container">
+    <div class="row">
+        <div class="col p-4">
+            <div class="d-flex justify-content-around">
+                <a th:href="@{/station/add}" class="btn btn-outline-primary">Регистрация СТО</a>
+                <a th:href="@{/service/add}" class="btn btn-outline-primary">Добавление сервиса</a>
+                <a th:href="@{/model/add}" class="btn btn-outline-primary">Добавление модель машины</a>
+                <a th:href="@{/station_admin/add}" class="btn btn-outline-primary">Регистрация администратора СТО</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col border">
+            <h4 class="h4">Водители</h4>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Номер машины</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="driver, i : ${drivers}">
+                    <th scope="row" th:text="${i.index + 1}"></th>
+                    <td>
+                        <a th:href="@{/driver/{id}(id=${driver.getId()})}" th:text="${driver.getEmail()}"></a>
+                    </td>
+                    <td th:if="${driver.getCar()} != null" th:text="${driver.getCar().getNumber()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col border">
+            <h4 class="h4">Модели машины</h4>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Модель</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="model, i : ${car_models}">
+                    <th scope="row" th:text="${i.index + 1}"></th>
+                    <td>
+                        <a th:href="@{/model/{id}(id=${model.getId()})}" th:text="${model.getName()}"></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col border">
+            <h4 class="h4">СТО администраторы</h4>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">СТО</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="station_admin, i : ${station_admins}">
+                    <th scope="row" th:text="${i.index + 1}"></th>
+                    <td>
+                        <a th:href="@{/station_admin/{id}(id=${station_admin.getId()})}" th:text="${station_admin.getEmail()}"></a>
+                    </td>
+                    <td>
+                        <a th:href="@{/station/{id}(id=${station_admin.getStation().getId()})}" th:text="${station_admin.getStation().getName()}"></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

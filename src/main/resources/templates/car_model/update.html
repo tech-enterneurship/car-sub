@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link th:insert="fragments/general.html :: bootstrapcss">
+    <link th:insert="fragments/general.html :: bootstrapjs">
+    <title>Изменение моделя машины</title>
+</head>
+<body>
+<header th:insert="fragments/general.html :: header"></header>
+<div class="container">
+    <div class="row">
+        <div class="col-6 offset-3">
+            <form th:action="@{/model/{id}(id=${car_model.getId()})}" th:method="POST" th:object="${car_model}" class="mt-5">
+                <div class="form-group">
+                    <label for="model_name">Модель</label>
+                    <input type="text" class="form-control" id="model_name" name="model_name" th:value="${car_model.getName()}">
+                </div>
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <button type="submit" class="btn btn-primary">Изменить</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

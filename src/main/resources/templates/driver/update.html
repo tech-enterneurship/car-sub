@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:insert="fragments/general.html :: bootstrapcss">
+    <link th:insert="fragments/general.html :: bootstrapjs">
+    <meta charset="UTF-8">
+    <title>Изменение данных водителя</title>
+</head>
+<body>
+<header th:insert="fragments/general.html :: header"></header>
+<div class="container">
+    <div class="row">
+        <div class="col-4 offset-4">
+            <form th:action="@{/driver/{id}(id=${driver.getId()})}" th:method="POST" th:object="${driver}" class="mt-5">
+                <div class="form-group my-2">
+                    <label for="email" class="fs-5 my-2">Email</label>
+                    <input type="text" class="form-control" id="email" th:field="*{email}">
+                </div>
+                <div class="form-group my-2">
+                    <label for="password" class="fs-5 my-2">Пароль</label>
+                    <input type="password" class="form-control" id="password" th:field="*{password}">
+                </div>
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <center><button type="submit" class="btn btn-primary">Изменить</button></center>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
